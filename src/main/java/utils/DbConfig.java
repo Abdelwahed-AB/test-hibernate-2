@@ -3,15 +3,22 @@ package utils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 public class DbConfig {
-    private final static EntityManagerFactory ENTITY_MANAGER_FACTORY;
+    private final static SessionFactory SESSION_FACTORY;
 
     static {
-        ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("test-unit");
+        Configuration configuration = new Configuration();
+        configuration.configure();
+
+        SESSION_FACTORY = configuration.buildSessionFactory();
     }
 
-    public static EntityManager entityManager(){
-        return ENTITY_MANAGER_FACTORY.createEntityManager();
+
+    public static Session getSession(){
+        return SESSION_FACTORY.openSession();
     }
 }
